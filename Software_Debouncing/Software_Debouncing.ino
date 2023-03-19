@@ -8,7 +8,7 @@ unsigned long last_debounce_time = 0;
 
 void setup() {
   pinMode(btn_pin, INPUT_PULLUP);
-  //Serial.begin(9600);
+  Serial.begin(9600);
 
 }
 
@@ -32,7 +32,7 @@ void loop() {
     
   }
 }
-Serial.println(counter);
+
 //Remember the previous state for next loop
 btn_prev = btn_read;
 }
