@@ -1,8 +1,9 @@
-int a = 5;
+int a = 32;
+int b = 14;
 
 void setup() {
   Serial.begin(9600);
-    if(a < 10){
+    if((a != 32) || (b == 14) ){
       Serial.print("I AM HAPPY");
     }
   else{
