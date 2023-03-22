@@ -5,6 +5,7 @@ int c;
 int d;
 int e;
 
+
 void setup() 
 {
     Serial.begin(9600);
@@ -21,12 +22,12 @@ void loop() {
  d = c - 10;
  Serial.println(d);
  e = d % 7;
- Serial.println(e);
+ Serial.print(e);
 
  delay(1000);
 }
 
-//BODMAS
+/*BODMAS
 int a;
 
 void setup()
@@ -39,4 +40,4 @@ void setup()
 void loop()
 {
 
-}
+}*/
