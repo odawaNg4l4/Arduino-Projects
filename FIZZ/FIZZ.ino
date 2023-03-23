@@ -4,7 +4,7 @@ void setup() {
 }
  
 void loop() {
-  
+   a = a + 1;
   if ( (a % 3) == 0 ) {
     Serial.println("Fizz");
   } else {
@@ -12,6 +12,5 @@ void loop() {
   }
   
  
-  a = a + 1;
   delay(1000);
 }
