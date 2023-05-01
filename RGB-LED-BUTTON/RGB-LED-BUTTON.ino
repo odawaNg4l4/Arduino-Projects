@@ -1,6 +1,6 @@
-const int RLED = 9;
+const int BLED = 9;
 const int GLED = 10;
-const int BLED = 11; 
+const int RLED = 11; 
 const int BUTTON = 4;
 
 boolean lastButton = LOW;
@@ -9,9 +9,9 @@ int ledMode = 0;
 
 void setup() 
 {
-  pinMode(RLED, OUTPUT);
-  pinMode(GLED, OUTPUT);
   pinMode(BLED, OUTPUT);
+  pinMode(GLED, OUTPUT);
+  pinMode(RLED, OUTPUT);
   pinMode(BUTTON, INPUT);
 }
 
@@ -58,11 +58,18 @@ void setMode(int mode)
   //TEAL
   else if(mode == 5)
     {
-      analogWrite(BLED, 0);
+      analogWrite(RLED, 0);
       analogWrite(GLED, 127);
       analogWrite(BLED, 127);
     }
   //ORANGE
+  else if (mode == 6)
+    {
+      analogWrite(RLED, 127);
+      analogWrite(GLED, 127);
+      analogWrite(BLED, 0);
+    }
+  //WHITE
   else if (mode == 7)
     {
       analogWrite(RLED, 85);
@@ -88,4 +95,5 @@ void loop()
     }
     lastButton = currentButton;
     if(ledMode == 8) ledMode =0;
+    setMode(ledMode);
 }
