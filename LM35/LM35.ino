@@ -1,11 +1,14 @@
 const int RLED = 9;
 const int GLED = 10;
 const int BLED = 11;
-const int TEMP = 0;
+const int TEMP = A0;
+const int lower_bound = 29;
+const int upper_bound = 80;
 int val =0;
 
 void setup() 
 {
+  pinMode(TEMP, INPUT);
   pinMode(RLED, OUTPUT);
   pinMode(GLED, OUTPUT);
   pinMode(BLED, OUTPUT);
@@ -16,32 +19,22 @@ void loop()
 {
     val = analogRead(TEMP);
     Serial.println(val);
-    float voltage;
-    float temp_c;
-    voltage = analogRead(TEMP) * 5000/1024;;
-    temp_c = 100.0 * voltage - 50;
-    Serial.print("voltage");
-    Serial.print(voltage);
-    Serial.print("deg C");
-    Serial.print(temp_c);
 
     delay(1000);
-}
-   
 
-  /*if ()
+  if (val == lower_bound)
     {
       digitalWrite(RLED, HIGH);
       digitalWrite(GLED, LOW);
       digitalWrite(BLED, LOW);
     }
-  else if(val == upper_temp)
+  else if(val > lower_bound && val < upper_bound)
   {
     digitalWrite(RLED, LOW);
     digitalWrite(GLED, HIGH);
     digitalWrite(BLED, LOW);
   }
-  else if(val > lower_temp && val < upper_temp)
+  else if(val == upper_bound)
   {
     digitalWrite(RLED, LOW);
     digitalWrite(GLED, LOW);
@@ -53,7 +46,6 @@ void loop()
     digitalWrite(GLED, LOW);
     digitalWrite(BLED, LOW);
   }
-    /*val = analogRead(TEMP);
-    Serial.println(val);
-    delay(500);*/
+
+}
 
