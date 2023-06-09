@@ -4,6 +4,17 @@ LiquidCrystal lcd(12, 11 ,5, 4, 3, 2);
 const int buttonLeftPin = 6;
 const int buttonRightPin = 7;
 
+byte characterSprite[8] = {
+  0b00100,
+  0b01110,
+  0b00100,
+  0b00100,
+  0b11111,
+  0b01110,
+  0b10101,
+  0b00100
+};
+
 int position = 0;
 
 const int maxPosition = 16;
@@ -34,7 +45,7 @@ void loop()
 void updatePosition() {
   lcd.clear();
   lcd.setCursor(position, 1);
-  lcd.write('X');
+  lcd.write((byte)0);
 }
 
 
