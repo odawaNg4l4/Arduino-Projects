@@ -1,98 +1,81 @@
 #include <LiquidCrystal.h>
-
-
-LiquidCrystal lcd(12, 11, 2, 3, 4, 5); 
-
-const int lcd_width= 16;
-
-const int left_btn= 8; 
-const int right_btn= 9;
-
-int left_btn_state= HIGH; 
-int left_btn_prev= HIGH; 
-
-int right_btn_state= HIGH; 
-int right_btn_p= HIGH; 
-
-const int debounce_delay= 50; 
-
-unsigned long left_last_debounce_time = 0;
-unsigned long right_last_debounce_time = 0;
-
-byte armsDown[8] = {
-  0b00100,
-  0b01010,
-  0b00100,
-  0b00100,
-  0b01110,
-  0b10101,
-  0b00100,
-  0b01010
-};
-
-int position =0; 
-
-void setup() { 
-  
-  pinMode(left_btn, INPUT_PULLUP);
-  pinMode(right_btn, INPUT_PULLUP);
-  
-  lcd.begin(16, 2); 
-  lcd.clear(); 
-  
-  lcd.createChar(0, armsDown); 
-  
-} 
-
-void loop() { 
-  
-  int left_btn_read = digitalRead(left_btn);
-  int right_btn_read = digitalRead(right_btn);
-  
-  if(left_btn_read != left_btn_prev) { 
-    left_last_debounce_time = millis(); 
-  } 
-  
-  if( millis() > ( left_last_debounce_time + debounce_delay) ) { 
-    if (left_btn_read != left_btn_state) { 
-      left_btn_state = left_btn_read; 
-      if( left_btn_state == LOW ) { 
-        position--; 
-        if (position < 0){ 
-          position = 0; 
-        } 
-      } 
-    } 
-  } 
-  left_btn_prev = left_btn_read;
-  
-  
-  
  
+// Pins
+const int l_pin = 8;
+const int r_pin = 9;
+ 
+// Number of columns on LCD
+const int lcd_width = 16;
+ 
+// LCD object
+LiquidCrystal lcd(12, 11, 2, 3, 4, 5);
+ 
+// Define a custom LCD character (5x7) that looks
+// like a person.
+byte person[8] = {
+  B00100,
+  B01110,
+  B10101,
+  B00100,
+  B01010,
+  B01010,
+  B01010,
+  B00000
+};
+ 
+// Character's position
+int person_x = 8;
+ 
+// Button states
+int l_prev = HIGH;
+int r_prev = HIGH;
+ 
+void setup()
+{
   
-  if(right_btn_read != right_btn_read) { 
-    right_last_debounce_time = millis(); 
-  } 
+  // Set pullups on buttons
+  pinMode(l_pin, INPUT_PULLUP);
+  pinMode(r_pin, INPUT_PULLUP);
   
-  if( millis() > ( right_last_debounce_time + debounce_delay) ) { 
-    if (right_btn_read != right_btn_state) { 
-      right_btn_state = right_btn_read; 
-      if( right_btn_state == LOW ) { 
-        position++; 
-        if (position > lcd_width){ 
-          position = lcd_width; 
-        } 
-      } 
-    } 
-  } 
-  right_btn_read = right_btn_read;
+  // Initialize and clear LCD 
+  lcd.begin(16, 2);
+  lcd.clear();
   
-  lcd.clear(); 
-  lcd.setCursor(position, 1); 
-  lcd.write(byte(0)); 
+  // Register custom character
+  lcd.createChar(0, person);
+}
+ 
+void loop()
+{
   
-  delay(20); 
+  // Look for left button press and move character to the left
+  int l_state = digitalRead(l_pin);
+  if ( (l_prev == HIGH) && (l_state == LOW) ) {
+    person_x--;
+    if ( person_x < 0 ) {
+      person_x = 0;
+    }
+  }
   
+  // Look for left button press and move character to the left
+  int r_state = digitalRead(r_pin);
+  if ( (r_prev == HIGH) && (r_state == LOW) ) {
+    person_x++;
+    if ( person_x >= lcd_width ) {
+      person_x = lcd_width - 1;
+    }
+  }
+  
+  // Remember previous button states
+  l_prev = l_state;
+  r_prev = r_state;
+  
+  // Clear screen, draw character
+  lcd.clear();
+  lcd.setCursor(person_x, 1);
+  lcd.write(byte(0));
+  
+  delay(20);
 } 
 
 
