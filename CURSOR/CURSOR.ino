@@ -7,8 +7,8 @@ void setup() {
 }
 
 void loop() {
-  lcd.noCursor();
+  lcd.noDisplay();
   delay(500);
-  lcd.cursor();
+  lcd.display();
   delay(500);
 }
